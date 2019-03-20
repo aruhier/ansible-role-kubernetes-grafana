@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ kubernetes_grafana_configmap }}
+  namespace: {{ kubernetes_grafana_namespace }}
+data:
+  grafana_config: |
+{% for section, options in kubernetes_grafana_config.items() %}
+    {% if section != "default" %}[{{ section }}]{% endif %}
+
+{% for option, value in options.items() %}
+    {{ option }} = {{ value }}
+{% endfor %}
+{% endfor %}

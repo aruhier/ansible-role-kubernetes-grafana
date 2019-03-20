@@ -1,0 +1,31 @@
+---
+galaxy_info:
+  author: Anthony Ruhier (Anthony25)
+  role_name: kubernetes_grafana
+  description: Install Grafana on Kubernetes
+  issue_tracker_url: https://github.com/Anthony25/ansible-role-kubernetes-kanboard/issues
+  license: BSD
+  min_ansible_version: 2.0
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: EL
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: Archlinux
+    - name: Alpine
+      versions:
+        - all
+
+  galaxy_tags:
+    - kubernetes
+
+dependencies: []

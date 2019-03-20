@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ kubernetes_grafana_deployment }}
+  namespace: {{ kubernetes_grafana_namespace }}
+  labels:
+    app: {{ kubernetes_grafana_app }}
+{% if kubernetes_grafana_deployment_labels %}
+    {{ kubernetes_grafana_deployment_labels | to_nice_yaml | indent(4) }}
+{% endif %}
+{% if kubernetes_grafana_deployment_annotations %}
+  annotations:
+    {{ kubernetes_grafana_deployment_annotations | to_nice_yaml | indent(4) }}
+{% endif %}
+spec:
+  replicas: {{ kubernetes_grafana_replicas }}
+  revisionHistoryLimit: {{ kubernetes_grafana_revision_history }}
+  selector:
+    matchLabels:
+      app: {{ kubernetes_grafana_app }}
+  template:
+    metadata:
+      labels:
+        app: {{ kubernetes_grafana_app }}
+    spec:
+      restartPolicy: Always
+      containers:
+      - image: {{ kubernetes_grafana_image }}
+        imagePullPolicy: Always
+        name: grafana
+        resources:
+          {{ kubernetes_grafana_resources | to_yaml | indent(10) }}
+        ports:
+        - name: http
+          containerPort: 3000
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: grafana
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        volumeMounts:
+        - mountPath: /var/lib/grafana
+          name: grafana-data
+          {% if kubernetes_grafana_data_volume.subPath is defined %}subPath: {{ kubernetes_grafana_data_volume.subPath }}{% endif %}
+
+        - mountPath: /etc/grafana/grafana.ini
+          name: grafana-config
+          subPath: grafana.ini
+
+{% if kubernetes_grafana_node_selector|default({}) %}
+      nodeSelector:
+        {{ kubernetes_grafana_node_selector | to_yaml | indent(8) }}
+{% endif %}
+      volumes:
+      - {name: grafana-data, {{ kubernetes_grafana_data_volume.definition | to_yaml }}}
+      - name: grafana-config
+        configMap:
+          name: {{ kubernetes_grafana_configmap }}
+          items:
+            - key: grafana_config
+              path: grafana.ini

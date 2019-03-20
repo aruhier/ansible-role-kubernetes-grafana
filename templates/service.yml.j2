@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ kubernetes_grafana_service }}
+  namespace: {{ kubernetes_grafana_namespace }}
+spec:
+  selector:
+    app: {{ kubernetes_grafana_app }}
+  ports:
+    - port: 80
+      targetPort: http

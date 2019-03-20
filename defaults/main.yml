@@ -1,0 +1,36 @@
+---
+
+kubernetes_grafana_image: "grafana/grafana:6.0.2"
+
+kubernetes_grafana_namespace: "default"
+kubernetes_grafana_deployment: "grafana-deployment"
+kubernetes_grafana_app: "grafana"
+kubernetes_grafana_service: "grafana"
+kubernetes_grafana_configmap: "grafana"
+
+kubernetes_grafana_node_selector: {}
+kubernetes_grafana_replicas: 1
+kubernetes_grafana_revision_history: 1
+
+kubernetes_grafana_deployment_labels: {}
+kubernetes_grafana_deployment_annotations: {}
+
+kubernetes_grafana_resources:
+  limits:
+    memory: "512Mi"
+  requests:
+    memory: "64Mi"
+
+kubernetes_grafana_data_volume:
+  description:
+
+kubernetes_grafana_config: {}
+
+kubernetes_grafana_setup_ingress: false
+kubernetes_grafana_ingress:
+  name: "grafana-ingress"
+  host: "grafana.example.com"
+  annotations:
+  tls:
+
+# vim: set ts=2 sw=2:
