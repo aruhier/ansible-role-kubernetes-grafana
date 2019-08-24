@@ -1,6 +1,6 @@
 ---
 
-kubernetes_grafana_image: "grafana/grafana:6.3.0"
+kubernetes_grafana_image: "grafana/grafana:6.3.3"
 
 kubernetes_grafana_namespace: "default"
 kubernetes_grafana_deployment: "grafana-deployment"
