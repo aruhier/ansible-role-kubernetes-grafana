@@ -36,7 +36,7 @@ spec:
         livenessProbe:
           httpGet:
             path: /api/health
-            port: grafana
+            port: http
           initialDelaySeconds: 60
           periodSeconds: 10
         volumeMounts:
